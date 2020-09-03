@@ -6,10 +6,45 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React,{Component} from 'react';
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 
-const App: () => React$Node = () => {
+class App extends Component{
+  state = {
+          nums: [],
+          op: [],
+          text : '',
+          res : ''
+      }
+
+      input = (event) => {
+        event.preventDefault();
+        if (this.state.res !== ''){
+            this.setState({res : ''})
+        }
+        let value = event.target.value;
+        let text = this.state.text
+        if (value === "." && !text.includes('.')) {
+            let newText = text.concat(value)
+            this.setState(
+                {
+                    text: newText
+                }
+            )
+            return
+        } else if  (value === "." && text.includes('.')) {
+            return
+        }
+        let newText = text.concat(value)
+        console.log(newText)
+        this.setState(
+            {
+                text: newText
+            }
+        )
+    };
+
+  render(){
   return (
     <>
       <View
@@ -27,6 +62,7 @@ const App: () => React$Node = () => {
               borderRadius: 10,
               borderWidth: 2,
             }}
+            value = {this.state.text}
           />
           <TouchableOpacity style={styles.buttons}>
             <Text style={styles.text}>←</Text>
@@ -42,7 +78,11 @@ const App: () => React$Node = () => {
           paddingBottom: 20,
         }}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttons}>
+          <TouchableOpacity 
+          style={styles.buttons}
+          onPress = {this.input}
+          value={1}
+          >
             <Text style={styles.text}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttons}>
@@ -105,7 +145,8 @@ const App: () => React$Node = () => {
       </View>
     </>
   );
-};
+  }
+}
 
 const styles = StyleSheet.create({
   buttonRow: {
