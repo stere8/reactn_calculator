@@ -40,6 +40,58 @@ class App extends Component {
       text: newText,
     });
   };
+selectOp =  (event)=>{
+        event.preventDefault()
+        let operation = event.target.value
+         let numz = this.state.nums
+         let ops = this.state.op
+         numz.push(this.state.text)
+         ops.push(operation)
+          this.setState({
+              nums : numz,
+              op : ops,
+              text : ''
+         })
+
+        }
+
+     result = (event) => {
+        event.preventDefault()
+         let biggerRes = ''
+         let tekst = this.state.text
+         let numz = this.state.nums
+         let ops = this.state.op
+         numz.map( (num, key)=>{
+            biggerRes = biggerRes.concat(num)
+            biggerRes = biggerRes.concat(ops[key])
+         })
+         biggerRes = biggerRes.concat(tekst)
+         this.setState(
+             {
+                 text:'' ,
+                 res : biggerRes + ' = ' + eval(biggerRes),
+                 nums : [],
+                 op : [],
+             }
+         )
+         console.log(this.state.text)
+         console.log(this.state.res)
+         console.log(this.state.nums)
+         console.log(this.state.op)
+
+    }
+    eraseAll = () =>{
+        this.setState({
+            nums : [],
+            op : [],
+            text : '',
+            res : ''
+        })
+        console.log(this.state.text)
+        console.log(this.state.res)
+        console.log(this.state.nums)
+        console.log(this.state.op)
+    }
 
   render() {
     return (
