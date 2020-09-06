@@ -6,145 +6,209 @@
  * @flow strict-local
  */
 
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 
-class App extends Component{
+class App extends Component {
   state = {
-          nums: [],
-          op: [],
-          text : '',
-          res : ''
-      }
+    nums: [],
+    op: [],
+    text: '',
+    res: '',
+  };
 
-      input = (event) => {
-        event.preventDefault();
-        if (this.state.res !== ''){
-            this.setState({res : ''})
-        }
-        let value = event.target.value;
-        let text = this.state.text
-        if (value === "." && !text.includes('.')) {
-            let newText = text.concat(value)
-            this.setState(
-                {
-                    text: newText
-                }
-            )
-            return
-        } else if  (value === "." && text.includes('.')) {
-            return
-        }
-        let newText = text.concat(value)
-        console.log(newText)
-        this.setState(
-            {
-                text: newText
-            }
-        )
-    };
+  input = (e) => {
+    // e.preventDefault();
+    if (this.state.res !== '') {
+      this.setState({res: ''});
+    }
+    let value = e;
+    console.log(value);
+    let text = this.state.text;
+    if (value === '.' && !text.includes('.')) {
+      let newText = text.concat(value);
+      this.setState({
+        text: newText,
+      });
+      return;
+    } else if (value === '.' && text.includes('.')) {
+      return;
+    }
+    let newText = text.concat(value);
+    console.log(newText);
+    this.setState({
+      text: newText,
+    });
+  };
 
-  render(){
-  return (
-    <>
-      <View
-        style={{
-          flex: 2,
-          flexDirection: 'column-reverse',
-          backgroundColor: '#392767',
-        }}>
-        <View style={{flexDirection: 'row', marginHorizontal: 5}}>
-          <Text
-            style={{
-              flex: 6,
-              backgroundColor: 'blue',
-              height: 90,
-              borderRadius: 10,
-              borderWidth: 2,
-            }}
-            value = {this.state.text}
-          />
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>←</Text>
-          </TouchableOpacity>
+  render() {
+    return (
+      <>
+        <View
+          style={{
+            flex: 2,
+            flexDirection: 'column-reverse',
+            backgroundColor: '#392767',
+          }}>
+          <View style={{flexDirection: 'row', marginHorizontal: 5}}>
+            <Text
+              style={{
+                flex: 6,
+                backgroundColor: 'blue',
+                height: 90,
+                borderRadius: 10,
+                borderWidth: 2,
+                fontSize: 50,
+                textAlign: 'center',
+              }}
+              value={this.state.text}>
+              {this.state.text}
+            </Text>
+            <TouchableOpacity style={styles.buttons}>
+              <Text style={styles.text}>←</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flex: 5,
-          flexDirection: 'column',
-          backgroundColor: '#392767',
-          justifyContent: 'center',
-          paddingBottom: 20,
-        }}>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity 
-          style={styles.buttons}
-          onPress = {this.input}
-          value={1}
-          >
-            <Text style={styles.text}>1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>+</Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            flex: 5,
+            flexDirection: 'column',
+            backgroundColor: '#392767',
+            justifyContent: 'center',
+            paddingBottom: 20,
+          }}>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(2);
+              }}>
+              <Text style={styles.text}>2</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(3);
+              }}>
+              <Text style={styles.text}>3</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input();
+              }}>
+              <Text style={styles.text}>+</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(4);
+              }}>
+              <Text style={styles.text}>4</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(5);
+              }}>
+              <Text style={styles.text}>5</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(6);
+              }}>
+              <Text style={styles.text}>6</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>*</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(7);
+              }}>
+              <Text style={styles.text}>7</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(8);
+              }}>
+              <Text style={styles.text}>8</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(9);
+              }}>
+              <Text style={styles.text}>9</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>/</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>C</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(0);
+              }}>
+              <Text style={styles.text}>0</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>.</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>-</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                this.input(1);
+              }}>
+              <Text style={styles.text}>=</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>4</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>5</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>6</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>*</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>7</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>8</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>9</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>/</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>C</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>0</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>.</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>-</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttons}>
-            <Text style={styles.text}>=</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </>
-  );
+      </>
+    );
   }
 }
 
