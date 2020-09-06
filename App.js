@@ -23,7 +23,6 @@ class App extends Component {
       this.setState({res: ''});
     }
     let value = e;
-    console.log(value);
     let text = this.state.text;
     if (value === '.' && !text.includes('.')) {
       let newText = text.concat(value);
@@ -35,63 +34,54 @@ class App extends Component {
       return;
     }
     let newText = text.concat(value);
-    console.log(newText);
     this.setState({
       text: newText,
     });
   };
-selectOp =  (event)=>{
-        event.preventDefault()
-        let operation = event.target.value
-         let numz = this.state.nums
-         let ops = this.state.op
-         numz.push(this.state.text)
-         ops.push(operation)
-          this.setState({
-              nums : numz,
-              op : ops,
-              text : ''
-         })
-
-        }
-
-     result = (event) => {
-        event.preventDefault()
-         let biggerRes = ''
-         let tekst = this.state.text
-         let numz = this.state.nums
-         let ops = this.state.op
-         numz.map( (num, key)=>{
-            biggerRes = biggerRes.concat(num)
-            biggerRes = biggerRes.concat(ops[key])
-         })
-         biggerRes = biggerRes.concat(tekst)
-         this.setState(
-             {
-                 text:'' ,
-                 res : biggerRes + ' = ' + eval(biggerRes),
-                 nums : [],
-                 op : [],
-             }
-         )
-         console.log(this.state.text)
-         console.log(this.state.res)
-         console.log(this.state.nums)
-         console.log(this.state.op)
-
+  selectOp = (op) => {
+    let operation = op;
+    let numz = this.state.nums;
+    let ops = this.state.op;
+    if (this.state.res !== '') {
+      numz.push(this.state.res);
+    } else if (this.state.text !== '') {
+      numz.push(this.state.text);
+    } else if (this.state.res === '' && this.state.res === '') {
+      numz.push('0');
     }
-    eraseAll = () =>{
-        this.setState({
-            nums : [],
-            op : [],
-            text : '',
-            res : ''
-        })
-        console.log(this.state.text)
-        console.log(this.state.res)
-        console.log(this.state.nums)
-        console.log(this.state.op)
-    }
+    ops.push(operation);
+    this.setState({
+      nums: numz,
+      op: ops,
+      text: '',
+    });
+  };
+
+  result = (event) => {
+    let biggerRes = '';
+    let tekst = this.state.text;
+    let numz = this.state.nums;
+    let ops = this.state.op;
+    numz.map((num, key) => {
+      biggerRes = biggerRes.concat(num);
+      biggerRes = biggerRes.concat(ops[key]);
+    });
+    biggerRes = biggerRes.concat(tekst);
+    this.setState({
+      text: '',
+      res: eval(biggerRes),
+      nums: [],
+      op: [],
+    });
+  };
+  eraseAll = () => {
+    this.setState({
+      nums: [],
+      op: [],
+      text: '',
+      res: '',
+    });
+  };
 
   render() {
     return (
@@ -113,10 +103,22 @@ selectOp =  (event)=>{
                 fontSize: 50,
                 textAlign: 'center',
               }}
+              numberOfLines={1}
               value={this.state.text}>
               {this.state.text}
+              {this.state.res}
             </Text>
-            <TouchableOpacity style={styles.buttons}>
+            <TouchableOpacity
+              style={styles.buttons}
+              onPress={(event) => {
+                let newText = this.state.text.substring(
+                  0,
+                  this.state.text.length - 1,
+                );
+                this.setState({
+                  text: newText,
+                });
+              }}>
               <Text style={styles.text}>←</Text>
             </TouchableOpacity>
           </View>
@@ -154,7 +156,7 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input();
+                this.selectOp('+');
               }}>
               <Text style={styles.text}>+</Text>
             </TouchableOpacity>
@@ -184,7 +186,7 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.selectOp('*');
               }}>
               <Text style={styles.text}>*</Text>
             </TouchableOpacity>
@@ -214,7 +216,7 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.selectOp('/');
               }}>
               <Text style={styles.text}>/</Text>
             </TouchableOpacity>
@@ -223,7 +225,7 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.eraseAll();
               }}>
               <Text style={styles.text}>C</Text>
             </TouchableOpacity>
@@ -237,14 +239,14 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.input('.');
               }}>
               <Text style={styles.text}>.</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.selectOp('-');
               }}>
               <Text style={styles.text}>-</Text>
             </TouchableOpacity>
@@ -253,7 +255,7 @@ selectOp =  (event)=>{
             <TouchableOpacity
               style={styles.buttons}
               onPress={(event) => {
-                this.input(1);
+                this.result();
               }}>
               <Text style={styles.text}>=</Text>
             </TouchableOpacity>
